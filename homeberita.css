@@ -1,0 +1,77 @@
+.float-left {
+    float: left;
+    padding: 5px,5px,5px,5px;
+    margin:  5px,5px,5px,5px;
+}
+
+.fixed-panel {
+  overflow-y: hidden;
+}
+
+.module {
+  width: 548px;
+  margin: 0 0 1em 0;
+  overflow: hidden;
+}
+.module p {
+  margin: 0;
+  text-align:justify;
+}
+
+.fadecustom {
+  position: relative;
+  height: 9.9em;
+}
+.fadecustom:after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 70%;
+  height: 1.2em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+}
+
+div a h3 {
+  color:white;
+  
+}
+
+.panel-heading {
+  background-color: #3498db !important; 
+}
+
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+    position: fixed;
+      width: 100%;
+      /*-webkit-transition: fade 4s  ease-in-out;
+      -moz-transition: fade 4s  ease-in-out;
+      -ms-transition: fade 4s  ease-in-out;
+      -o-transition: fade 4s  ease-in-out;*/
+      transition-duration: 4s;
+      opacity: 0.7;
+}
+
+.w3-card-4 {
+  width:350px;
+  padding-top: 15px;
+  padding-bottom: 20px;
+}
+
+.w3-card-4 img {
+  width:320px;
+}
+
+#divbackground{
+      height:auto;
+      margin-top:0px;
+      background-color:white;
+      /*background: #314755;
+      background: -webkit-linear-gradient(to left, #314755 , #26a0da);      
+      background: linear-gradient(to left, #314755 , #26a0da);*/
+      /*background: #50C9C3;
+      background: -webkit-linear-gradient(to left, #50C9C3 , #96DEDA);
+      background: linear-gradient(to left, #50C9C3 , #96DEDA);*/
+}
