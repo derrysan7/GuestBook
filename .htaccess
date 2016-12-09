@@ -1,0 +1,150 @@
+# ----------------------------------------------------------------------
+# Default Lang and Basic Security Behavior
+# ----------------------------------------------------------------------
+# X-Powered-By hidden by default nobody will notice if you're using PHP or ASP or whatever
+Header unset X-Powered-By
+# Set by default UTF-8 charset
+AddDefaultCharset UTF-8
+# ITALIAN language for this files, change it for your needs
+AddLanguage it-IT .html .htm .css .js
+# Set the default charset for every feed methods
+AddCharset utf-8 .atom .css .js .json .rss .vtt .xml
+# ITALIAN timezone, change it for your needs
+SetEnv TZ Europe/Rome
+# Don not allow any pages to be framed - Defends against CSRF
+Header set X-Frame-Options SAMEORIGIN
+# Turn on IE8-IE9 XSS prevention tools
+Header set X-XSS-Protection "1; mode=block"
+# Only allow JavaScript from the same domain to be run.
+# Don not allow inline JavaScript to run.
+Header set X-Content-Security-Policy "allow 'self';"
+# Prevent mime based attacks
+Header set X-Content-Type-Options "nosniff"
+# Disable server sign
+ServerSignature Off
+# drop Range header when more than 5 ranges. CVE-2011-3192
+SetEnvIf Range (,.*?){5,} bad-range=1
+RequestHeader unset Range env=bad-range
+# LIMIT UPLOAD FILE SIZE TO PROTECT AGAINST DOS ATTACK. Bytes, 0-2147483647(2GB)
+LimitRequestBody 2147483647
+#
+
+# ----------------------------------------------------------------------
+# Prevent 404 errors for non-existing redirected folders
+# ----------------------------------------------------------------------
+# without -MultiViews, Apache will give a 404 for a rewrite if a folder of the
+# same name does not exist.
+# webmasterworld.com/apache/3808792.htm
+Options -MultiViews
+#
+#
+# ----------------------------------------------------------------------
+# Custom Errors page
+# ----------------------------------------------------------------------
+# You can add custom pages to handle 500 or 403 pretty easily, if you like.
+# If you are hosting your site in subdirectory, adjust this accordingly
+#    e.g. ErrorDocument 404 /subdir/404.html
+ErrorDocument 100 /100_CONTINUE
+ErrorDocument 101 /101_SWITCHING_PROTOCOLS
+ErrorDocument 102 /102_PROCESSING
+ErrorDocument 200 /200_OK
+ErrorDocument 201 /201_CREATED
+ErrorDocument 202 /202_ACCEPTED
+ErrorDocument 203 /203_NON_AUTHORITATIVE
+ErrorDocument 204 /204_NO_CONTENT
+ErrorDocument 205 /205_RESET_CONTENT
+ErrorDocument 206 /206_PARTIAL_CONTENT
+ErrorDocument 207 /207_MULTI_STATUS
+ErrorDocument 300 /300_MULTIPLE_CHOICES
+ErrorDocument 301 /301_MOVED_PERMANENTLY
+ErrorDocument 302 /302_MOVED_TEMPORARILY
+ErrorDocument 303 /303_SEE_OTHER
+ErrorDocument 304 /304_NOT_MODIFIED
+ErrorDocument 305 /305_USE_PROXY
+ErrorDocument 307 /307_TEMPORARY_REDIRECT
+ErrorDocument 400 /400_BAD_REQUEST
+ErrorDocument 401 /401_UNAUTHORIZED
+ErrorDocument 402 /402_PAYMENT_REQUIRED
+ErrorDocument 403 /403_FORBIDDEN
+ErrorDocument 404 /404_NOT_FOUND
+ErrorDocument 405 /405_METHOD_NOT_ALLOWED
+ErrorDocument 406 /406_NOT_ACCEPTABLE
+ErrorDocument 407 /407_PROXY_AUTHENTICATION_REQUIRED
+ErrorDocument 408 /408_REQUEST_TIME_OUT
+ErrorDocument 409 /409_CONFLICT
+ErrorDocument 410 /410_GONE
+ErrorDocument 411 /411_LENGTH_REQUIRED
+ErrorDocument 412 /412_PRECONDITION_FAILED
+ErrorDocument 413 /413_REQUEST_ENTITY_TOO_LARGE
+ErrorDocument 414 /414_REQUEST_URI_TOO_LARGE
+ErrorDocument 415 /415_UNSUPPORTED_MEDIA_TYPE
+ErrorDocument 416 /416_RANGE_NOT_SATISFIABLE
+ErrorDocument 417 /417_EXPECTATION_FAILED
+ErrorDocument 422 /422_UNPROCESSABLE_ENTITY
+ErrorDocument 423 /423_LOCKED
+ErrorDocument 424 /424_FAILED_DEPENDENCY
+ErrorDocument 426 /426_UPGRADE_REQUIRED
+ErrorDocument 500 /500_INTERNAL_SERVER_ERROR
+ErrorDocument 501 /501_NOT_IMPLEMENTED
+ErrorDocument 502 /502_BAD_GATEWAY
+ErrorDocument 503 /503_SERVICE_UNAVAILABLE
+ErrorDocument 504 /504_GATEWAY_TIME_OUT
+ErrorDocument 505 /505_VERSION_NOT_SUPPORTED
+ErrorDocument 506 /506_VARIANT_ALSO_VARIES
+ErrorDocument 507 /507_INSUFFICIENT_STORAGE
+ErrorDocument 510 /510_NOT_EXTENDED
+#
+#
+# ----------------------------------------------------------------------
+# A little more security
+# ----------------------------------------------------------------------
+# To avoid displaying the exact version number of Apache being used, add the
+# following to httpd.conf (it will not work in .htaccess):
+# ServerTokens Prod
+IndexIgnore *
+# "-Indexes" will have Apache block users from browsing folders without a
+# default document Usually you should leave this activated, because you
+# should not allow everybody to surf through every folder on your server (which
+# includes rather private places like CMS system folders).
+<IfModule mod_autoindex.c>
+  Options -Indexes
+  Options -ExecCGI
+</IfModule>
+# Block access to "hidden" directories or files whose names begin with a
+# period. This includes directories used by version control systems such as
+# Subversion or Git.
+<IfModule mod_rewrite.c>
+  RewriteCond %{SCRIPT_FILENAME} -d [OR]
+  RewriteCond %{SCRIPT_FILENAME} -f
+  RewriteRule "(^|/)\." - [F]
+</IfModule>
+# Block access to backup and source files. These files may be left by some
+# text/html editors and pose a great security danger, when anyone can access
+# them.
+<FilesMatch "(\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$">
+  Order allow,deny
+  Deny from all
+  Satisfy All
+</FilesMatch>
+AddHandler cgi-script .pl .py .asp .shtml .sh .cgi
+# optional logging.
+# CustomLog insert-path-and-name-of-log common env=bad-range
+# If your server is not already configured as such, the following directive
+# should be uncommented in order to set PHP is register_globals option to OFF.
+# This closes a major security hole that is abused by most XSS (cross-site
+# scripting) attacks. For more information: http://php.net/register_globals
+#
+
+Options +FollowSymLinks -MultiViews
+# Turn mod_rewrite on
+RewriteEngine On
+RewriteBase /
+
+## hide .php extension
+# To externally redirect /dir/foo.php to /dir/foo
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s([^.]+)\.php [NC]
+RewriteRule ^ %1 [R,L,NC]
+
+## To internally redirect /dir/foo to /dir/foo.php
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^ %{REQUEST_URI}.php [L]

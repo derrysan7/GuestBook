@@ -1,0 +1,38 @@
+.container-struct{
+    align-items: center;
+    display: table;
+    text-align: center;
+}
+
+.container-card{
+    padding: 10px 10px 10px 10px;
+    text-align: center;
+}
+
+.container-org{
+    align-items:center;
+    display:table;
+    text-align:center;
+    padding-left:0px;
+}
+
+.hr-style{
+    border-color:black;
+    width:102%;
+}
+
+.card-set{
+    padding: 10px 10px 10px 10px;
+    width:200px;
+    background-color: white;
+}
+
+.card-imgset{
+    width:150px;
+    height: 150px;
+}
+
+.marginh1{
+    margin-top:50px;
+    margin-bottom: 50px;
+}
