@@ -9,7 +9,6 @@ body{
     max-width: 500px;
     padding: 19px 29px 29px;
     margin: 0 auto;
-	//margin-top:90px;
     background-color: #fff;
 	
     border: 1px solid #e5e5e5;
@@ -21,8 +20,8 @@ body{
             box-shadow: 0 1px 2px rgba(0,0,0,.05);
 			
 	font-family:Tahoma, Geneva, sans-serif;
-	color:#990000;
 	font-weight:lighter;
+
 }
 
 .form-signin .form-signin-heading{
@@ -30,8 +29,7 @@ body{
 }
 .form-signin input[type="text"],
 .form-signin input[type="password"],
-.form-signin input[type="email"],
-.form-signin select[name="drop_perm"] {
+.form-signin input[type="email"]{
     font-size: 16px;
     height: 45px;
     padding: 7px 9px;
@@ -40,7 +38,7 @@ body{
 .signin-form, .body-container
 {
 	//border:solid red 1px;
-	margin-top:110px;
+	margin-top:60px;
 }
 .navbar-brand{
 	font-family: 'Roboto', sans-serif;

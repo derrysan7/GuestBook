@@ -46,6 +46,11 @@ if(isset($_POST['btn-login']))
         
         <div id="error">
         <?php
+            if(isset($_GET['inactive']))
+            {
+                $error = "This Account is not Activated Go to your Inbox and Activate it.";
+            }
+            
 			if(isset($error))
 			{
 				?>
@@ -72,7 +77,9 @@ if(isset($_POST['btn-login']))
             <button type="submit" name="btn-login" class="btn btn-default">
                 	<i class="glyphicon glyphicon-log-in"></i> &nbsp; Masuk
             </button>
-        </div>  
+        </div>
+        <a href="fpass.php">Forgot your Password ? </a>  
+        <br />
       	<br />
 
             <label>belum registrasi ?<a href="index.php">Registrasi disini</a></label>

@@ -5,6 +5,7 @@
 
   if ($_SESSION['user_session']!=""){
   $userId = $_SESSION['user_session'];
+  $auth_user->antiforgerytoken();
   
   $stmt = $auth_user->runQuery("SELECT * FROM users WHERE userId=:userId");
   $stmt->execute(array(":userId"=>$userId));

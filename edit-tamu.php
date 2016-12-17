@@ -18,31 +18,33 @@ $crud = new crud($DB_con);
 
 if(isset($_POST['btn-update']))
 {
-    $id = $_GET['edit_id'];
-    extract($crud->getID($id));
-    if ($userRow['userId'] == $userId){
+    if ($_POST['csrf-token'] == $_SESSION['token']){
+        $id = $_GET['edit_id'];
+        extract($crud->getID($id));
+        if ($userRow['userId'] == $userId){
 
-            $tnama = htmlspecialchars($_POST['txt_nama']);
-            $temail = htmlspecialchars($_POST['txt_email']);
-            $talamat = htmlspecialchars($_POST['txt_alamat']);
-            $tucapan = htmlspecialchars($_POST['txt_ucapan']);
+                $tnama = htmlspecialchars($_POST['txt_nama']);
+                $temail = htmlspecialchars($_POST['txt_email']);
+                $talamat = htmlspecialchars($_POST['txt_alamat']);
+                $tucapan = htmlspecialchars($_POST['txt_ucapan']);
 
-             if($crud->update($id,$tnama,$temail,$talamat,$tucapan))
-             {
-              $msg = "<div class='alert alert-info'>
-                <strong>Success!</strong> Record was updated successfully <a href='listtamu.php'>HOME</a>!
-                </div>";
-             }
-             else
-             {
-              $msg = "<div class='alert alert-warning'>
-                <strong>Failed!</strong> ERROR while updating record !
-                </div>";
-             }
+                 if($crud->update($id,$tnama,$temail,$talamat,$tucapan))
+                 {
+                  $msg = "<div class='alert alert-info'>
+                    <strong>Success!</strong> Record was updated successfully <a href='listtamu.php'>HOME</a>!
+                    </div>";
+                 }
+                 else
+                 {
+                  $msg = "<div class='alert alert-warning'>
+                    <strong>Failed!</strong> ERROR while updating record !
+                    </div>";
+                 }
 
-    }else {
-        exit("Edit Error! Wrong Author");
-    }
+        }else {
+            exit("Edit Error! Wrong Author");
+        }
+    }exit("Error! Wrong Token");
 }
 
 if(isset($_GET['edit_id']))
@@ -80,7 +82,7 @@ if(isset($msg))
     ?>
     <form method="post">
 
-
+            <input type="edit" name="csrf-token" value="<?php echo $_SESSION['token'] ?>">
             <div class="col-xs-8">
                 <label>Nama</label>          
                 <input type='text' name='txt_nama' class='form-control' maxlength="50" value='<?php echo $tamuNama ?>' required>

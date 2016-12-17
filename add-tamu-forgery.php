@@ -17,7 +17,6 @@ $crud = new crud($DB_con);
 
 if(isset($_POST['btn-save']))
 {
-    if ($_POST['csrf-token'] == $_SESSION['token']){
             $tuserid = $_POST['txt_userid'];
             $tusernamepenulis = $_POST['txt_namapenulis'];
             $tnama = htmlspecialchars($_POST['txt_nama']);
@@ -36,7 +35,6 @@ if(isset($_POST['btn-save']))
                 header("Location: add-tamu.php?failure");
                 } 
             } 
-    }exit("Error! Wrong Token");
 }
 ?>
 
@@ -82,7 +80,6 @@ else if(isset($_GET['failure']))
   
     <form method="post">
 
-            <input type="hidden" name="csrf-token" value="<?php echo $_SESSION['token'] ?>">
             <div class="col-xs-8">
                 <label>Nama</label>          
                 <input type='text' name='txt_nama' class='form-control' maxlength="50" required>

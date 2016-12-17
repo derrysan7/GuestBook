@@ -1,5 +1,7 @@
 <?php
   require_once("session.php");
+  require_once('class.user.php');
+  $user = new USER();
 ?>
 <?php
 include_once 'dbconfigcrud.php';
@@ -8,7 +10,7 @@ include_once 'class.crud.tamu.php';
 $crud = new crud($DB_con);
 ?>
 
-<?php include_once 'header.php'; ?>
+<?php include_once 'header.php';?>
 <link rel="stylesheet" href="styletamu.css" type="text/css">
 
 <div class="clearfix"></div>

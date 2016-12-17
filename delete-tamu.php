@@ -24,13 +24,15 @@ if(isset($_GET['delete_id']))
 
 if(isset($_POST['btn-del']))
 {
-  if ($userRow['userId'] == $userId){
-     $id_del = $_GET['delete_id'];
-     $crud->delete($id_del);
-     header("Location: delete-tamu.php?deleted"); 
-  }else {
-        exit("Delete Error! Wrong Author");
-  }
+  if ($_POST['csrf-token'] == $_SESSION['token']){
+    if ($userRow['userId'] == $userId){
+       $id_del = $_GET['delete_id'];
+       $crud->delete($id_del);
+       header("Location: delete-tamu.php?deleted"); 
+    }else {
+          exit("Delete Error! Wrong Author");
+    }
+  }exit("Error! Wrong Token");
 }
 
 ?>
@@ -96,6 +98,7 @@ if(isset($_GET['delete_id']))
 {
  ?>
    <form method="post">
+   <input type="text" name="csrf-token" value="<?php echo $_SESSION['token'] ?>">
     <input type="hidden" name="id" value="<?php echo $id ?>" />
     <button class="btn btn-large btn-primary" type="submit" name="btn-del"><i class="glyphicon glyphicon-trash"></i> &nbsp; YES</button>
     <a href="listtamu.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; NO</a>
