@@ -19,10 +19,10 @@ if(isset($_POST['btn-save']))
 {
             $tuserid = $_POST['txt_userid'];
             $tusernamepenulis = $_POST['txt_namapenulis'];
-            $tnama = htmlspecialchars($_POST['txt_nama']);
-            $temail = htmlspecialchars($_POST['txt_email']);
-            $talamat = htmlspecialchars($_POST['txt_alamat']);
-            $tucapan = htmlspecialchars($_POST['txt_ucapan']);
+            $tnama = $_POST['txt_nama'];
+            $temail = $_POST['txt_email'];
+            $talamat = $_POST['txt_alamat'];
+            $tucapan = $_POST['txt_ucapan'];
 
             if(!isset($errMSG))
             {
@@ -82,7 +82,7 @@ else if(isset($_GET['failure']))
 
             <div class="col-xs-8">
                 <label>Nama</label>          
-                <input type='text' name='txt_nama' class='form-control' maxlength="50" required>
+                <input type='text' name='txt_nama' class='form-control' required>
             </div>
 
             <div class="col-xs-8">

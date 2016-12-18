@@ -151,8 +151,8 @@ class USER
 	    $mail->AddAddress($email);
 	    $mail->Username="cobahmsi@gmail.com";
 	    $mail->Password="rpl1uyee";
-	    $mail->SetFrom('cobahmsi@gmail.com','Power Ranger');
-	    $mail->AddReplyTo("cobahmsi@gmail.com","Power Ranger");
+	    $mail->SetFrom('cobahmsi@gmail.com','Wedding Admin');
+	    $mail->AddReplyTo("cobahmsi@gmail.com","Wedding Admin");
 	    $mail->Subject = $subject;
 	    $mail->MsgHTML($message);
 	    $mail->Send();

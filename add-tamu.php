@@ -36,7 +36,9 @@ if(isset($_POST['btn-save']))
                 header("Location: add-tamu.php?failure");
                 } 
             } 
-    }exit("Error! Wrong Token");
+    }else{
+        exit("Error! Wrong Token");
+    }
 }
 ?>
 

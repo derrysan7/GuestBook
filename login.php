@@ -75,14 +75,14 @@ if(isset($_POST['btn-login']))
         
         <div class="form-group">
             <button type="submit" name="btn-login" class="btn btn-default">
-                	<i class="glyphicon glyphicon-log-in"></i> &nbsp; Masuk
+                	<i class="glyphicon glyphicon-log-in"></i> &nbsp; Login
             </button>
         </div>
         <a href="fpass.php">Forgot your Password ? </a>  
         <br />
       	<br />
 
-            <label>belum registrasi ?<a href="index.php">Registrasi disini</a></label>
+            <label>Not Registered Yet ?<a href="index.php">Register Here</a></label>
       </form>
 
     </div>

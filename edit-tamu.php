@@ -4,12 +4,6 @@
 <?php
 require_once("class.user.php");
 $auth_user = new USER();
-$userIdloggedin = $_SESSION['user_session'];
-
-$stmt = $auth_user->runQuery("SELECT * FROM users WHERE userId=:userId");
-$stmt->execute(array(":userId"=>$userIdloggedin));
-
-$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
 include_once 'dbconfigcrud.php';
 include_once 'class.crud.tamu.php';
@@ -21,7 +15,7 @@ if(isset($_POST['btn-update']))
     if ($_POST['csrf-token'] == $_SESSION['token']){
         $id = $_GET['edit_id'];
         extract($crud->getID($id));
-        if ($userRow['userId'] == $userId){
+        if ($_SESSION['user_session'] == $userId){
 
                 $tnama = htmlspecialchars($_POST['txt_nama']);
                 $temail = htmlspecialchars($_POST['txt_email']);
@@ -44,7 +38,9 @@ if(isset($_POST['btn-update']))
         }else {
             exit("Edit Error! Wrong Author");
         }
-    }exit("Error! Wrong Token");
+    }else{
+        exit("Error! Wrong Token");
+    }
 }
 
 if(isset($_GET['edit_id']))
@@ -82,7 +78,7 @@ if(isset($msg))
     ?>
     <form method="post">
 
-            <input type="edit" name="csrf-token" value="<?php echo $_SESSION['token'] ?>">
+            <input type="hidden" name="csrf-token" value="<?php echo $_SESSION['token'] ?>">
             <div class="col-xs-8">
                 <label>Nama</label>          
                 <input type='text' name='txt_nama' class='form-control' maxlength="50" value='<?php echo $tamuNama ?>' required>

@@ -4,12 +4,6 @@
 <?php
 require_once("class.user.php");
 $auth_user = new USER();
-$userIdloggedin = $_SESSION['user_session'];
-
-$stmt = $auth_user->runQuery("SELECT * FROM users WHERE userId=:userId");
-$stmt->execute(array(":userId"=>$userIdloggedin));
-
-$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
 include_once 'dbconfigcrud.php';
 include_once 'class.crud.tamu.php';
@@ -25,7 +19,7 @@ if(isset($_GET['delete_id']))
 if(isset($_POST['btn-del']))
 {
   if ($_POST['csrf-token'] == $_SESSION['token']){
-    if ($userRow['userId'] == $userId){
+    if ($_SESSION['user_session'] == $userId){
        $id_del = $_GET['delete_id'];
        $crud->delete($id_del);
        header("Location: delete-tamu.php?deleted"); 
@@ -98,7 +92,7 @@ if(isset($_GET['delete_id']))
 {
  ?>
    <form method="post">
-   <input type="text" name="csrf-token" value="<?php echo $_SESSION['token'] ?>">
+   <input type="hidden" name="csrf-token" value="<?php echo $_SESSION['token'] ?>">
     <input type="hidden" name="id" value="<?php echo $id ?>" />
     <button class="btn btn-large btn-primary" type="submit" name="btn-del"><i class="glyphicon glyphicon-trash"></i> &nbsp; YES</button>
     <a href="listtamu.php" class="btn btn-large btn-success"><i class="glyphicon glyphicon-backward"></i> &nbsp; NO</a>
